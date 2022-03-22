@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/action.js"></script>
+  <title>Laba1</title>
+</head>
+<body>
+  <header>
+    <img id="gif" src="/assets/animation.gif">
+  </header>
+  <main>
+    <div id="search-form">
+      <input id="search" type="text" placeholder="Искать" onkeyup="tableSearch()">
+    </div>
+
+    <fieldset id="tasks-form">
+      <table id="tasks-grid">
+        <thead>
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Файл</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < tasks.length; i++) {%>
+            <tr>
+              <th><%=i + 1%></th>
+              <td><%=tasks[i].name%></td>
+              <td><%=tasks[i].description%></td>
+              <td><%=tasks[i].status%></td>
+              <td><%=tasks[i].date%></td>
+              <td><a href="/assets/<%=tasks[i].attach%>" download><%=tasks[i].attach%></a></td>
+              </tr>
+          <%} %> 
+        </tbody>
+      </table>
+    </fieldset>
+
+    <button id="show-add-form" onclick="showOrHideAddForm()">Добавить новую задачу</button>
+
+    <div id="add-form" hidden>
+      <form id="content" action="/add" method="post" enctype="multipart/form-data">
+        <button id="hide-add-form" onclick="showOrHideAddForm()">X</button>
+        <div class="form-group">
+            <label>Имя</label><br>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>Описание</label><br>
+              <input type="text" class="form-control" name="description" required>
+        </div>
+        <div class="form-group">
+            <label>Статус</label><br>
+            <select class="form-control" name="status">
+                <option value="новая">новая</option>
+                <option value="в процессе">в процессе</option>
+                <option value="выполнена">выполнена</option>
+                <option value="закрыта">закрыта</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <lable>Дата</lable><br>
+            <input type="date" name="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Добавить файл</label><br>
+            <input id="add-file" type="file" name="filedata">
+        </div>
+        <button id="save-task" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </main>
+</body>
